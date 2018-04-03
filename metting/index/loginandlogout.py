@@ -1,12 +1,13 @@
-import datetime
-import json
-
-from flask import Flask, request, render_template, session, redirect, Response,Blueprint
+from flask import request, render_template, session, redirect, Blueprint
 from wtforms import Form
 from wtforms import validators
 from wtforms import widgets
 from wtforms.fields import simple
-from ..db_helper import SQLHelper
+
+# from metting.utils.db_helper import SQLHelper
+from metting.utils.db import Sqlcaozuo
+
+
 class LoginForm(Form):
     user = simple.StringField(
         label='用户名',
@@ -42,7 +43,8 @@ def login():
     if form.validate():
         user = form.data['user']
         pwd = form.data['pwd']
-        result = SQLHelper.fetch_all('Select name,id from user WHERE name=%s and pwd=%s', [user, pwd])
+        # result = SQLHelper.fetch_all('Select name,id from user WHERE name=%s and pwd=%s', [user, pwd])
+        result = Sqlcaozuo.user_fetch_one(user,pwd)
         if result:
             session['user'] = result[0]
             return redirect('/index')
