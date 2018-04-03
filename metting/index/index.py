@@ -14,7 +14,7 @@ index1=Blueprint('index',__name__)
 def index():
     time = SQLHelper.fetch_all('Select id,datetime from time ', [])
     room = SQLHelper.fetch_all('Select id,name from room ', [])
-    user = session.get('user')[0]
+    user = session.get('user_info').get('name')
     if request.method=='GET':
         dt=datetime.datetime.today().strftime('%Y/%m/%d')
         reseve_list = SQLHelper.fetch_all('Select rid,tid,name from reseve  INNER JOIN user ON reseve.uid=user.id WHERE reseve.date=%s', [dt])

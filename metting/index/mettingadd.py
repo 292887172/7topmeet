@@ -16,8 +16,8 @@ def add():
         rid=request.form.get('rid')
         tid = request.form.get('tid')
         date=request.form.get('date')
-        uid=session.get('user')[1]
-        user=session.get('user')[0]
+        uid=session.get('user_info').get('id')
+		user=session.get('user_info').get('name')
         row=SQLHelper.add('INSERT INTO reseve(rid, date, tid,uid) VALUES (%s, %s, %s,%s)',[rid,date,tid,uid])
         ret={'stude':row,'user':user}
         return Response(json.dumps(ret))
